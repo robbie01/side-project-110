@@ -42,6 +42,7 @@ struct Vector2I {
 };
 
 struct Camera {
+  int w, h;
   float near, cx, cy, cz, rx, ry, rz;
   Vector2I project(float, float, float) const;
 };

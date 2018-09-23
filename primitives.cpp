@@ -119,7 +119,7 @@ Rect Triangle::getBoundingRect() const {
 }
 
 bool edge(const Vector2I& a, const Vector2I& b, const Vector2I& c) {
-  return ((c.x-a.x)*(b.y-a.y)-(c.y-a.y)*(b.x-a.x) >= 0);
+  return (c.x-a.x)*(b.y-a.y)-(c.y-a.y)*(b.x-a.x) >= 0;
 }
 
 bool Triangle::hasPoint(const Vector2I& p) const {
@@ -142,8 +142,8 @@ Vector2I Camera::project(float ax, float ay, float az) const {
     dx = cy * (sz*y + cz*x) - sy*z,
     dy = sx * (cy*z + sy*(sz*y + cz*x)) + cx * (cz*y - sz*x),
     dz = cx * (cy*z + sy*(sz*y + cz*x)) - sx * (cz*y - sz*x),
-    bx = dx * near / dz,
-    by = dy * near / dz;
+    bx = dx * near / dz + w/2,
+    by = dy * near / dz + h/2;
   return Vector2I{ (int)bx, (int)by };
 }
 
@@ -153,5 +153,5 @@ QuadGeometry QuadGeometry::projectRect(const Camera& cam, const Rect3D& rect, in
     v2 = cam.project(rect.x2, rect.y1, rect.z2),
     v3 = cam.project(rect.x1, rect.y2, rect.z1),
     v4 = cam.project(rect.x2, rect.y2, rect.z2);
-  return QuadGeometry{ Triangle{v1, v2, v3}, Triangle{v2, v3, v4}, color };
+  return QuadGeometry{ Triangle{v1, v2, v3}, Triangle{v4, v3, v2}, color };
 }

@@ -11,7 +11,7 @@
 constexpr int w = 640, h = 480;
 
 void drawTriangle(SDL_Surface* sfc, const Triangle& tri, int color) {
-  int* pixels = (int*)sfc->pixels;
+  Uint32* pixels = (Uint32*)sfc->pixels;
   Rect bbox = tri.getBoundingRect();
 
   std::cout << bbox.x1 << ' ' << bbox.y1 << ' ' << bbox.x2 << ' ' << bbox.y2 << std::endl;
@@ -51,7 +51,7 @@ int main() {
     FAIL();
   }
 
-  Camera cam { 1, 0, 0, 0, 0, 0, 0 };
+  Camera cam { w, h, 1, 0, 0, 0, 0, 0, 0 };
 
   drawQuad(renderSfc, QuadGeometry::projectRect(cam, { -100, 100, -10, 100, 0, -10 }, 0x00FF00FF));
 
